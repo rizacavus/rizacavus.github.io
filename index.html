@@ -1,6 +1,106 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <loading class="|">|.</loading>
-    </body>
+<html lang="tr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<META HTTP-EQUIV="Content-language" CONTENT="tr">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+
+<!-- <script src='https://code.responsivevoice.org/responsivevoice.js'></script>  -->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=TPsERDFc"></script>
+
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+<script>
+var voicelist = responsiveVoice.getVoices();
+console.log(voicelist);
+
+$(document).ready(function() {
+    var output = [];
+
+$.each(voicelist, function(key, value)
+{
+  output.push('<option value="'+ value.name +'">'+ value.name +'</option>');
+});
+
+$('#ses').html(output.join(''));
+$('#ses').val("Turkish Male");
+$("#txt").focus();
+<!-- $("#txt").live('focus', function() { $(this).select(); }); -->
+   $('#txt').bind('focus', function () {
+        $('#txt').select();
+    });
+});
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+	e.preventDefault();
+        konus();
+    }
+});
+
+function konus()
+{
+    responsiveVoice.setDefaultRate($("#hiz").val());
+    responsiveVoice.setDefaultVoice($("#ses").val());
+    responsiveVoice.speak($('#txt').val());
+    $("#txt").focus();
+}
+
+</script>
+<style>
+.row{
+    width: 100%;
+
+    margin: 0px;
+}
+body{
+background: #000738;
+}
+.row.head {
+    background: #001080;
+    color: white;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 50px;
+}
+
+.row.content {
+    background: #e0e0e0;
+	padding-top: 10px;
+    padding-bottom: 10px;
+	font-size: 18px;
+    font-weight: bold;
+    height: 100%;
+}
+
+.col-6.col-right {
+    text-align: right;
+}
+</style>
+</head>
+<body lang="tr">
+<div class="row head">
+<div class="col-6">
+CVSCMS
+</div>
+<div class="col-6 col-right">
+Konuşma Sentezleme
+</div>
+</div>
+<div class="row content">
+<div class="col-8 col-md-10">
+<textarea id="txt" style='width:100%;height:80%;padding: 10px;' placeholder="Buraya okunmasını istediğiniz şeyi yazın"></textarea>
+</div>
+<div class="col-4 col-md-2">
+<input style='width:100%;height:100px;margin:0 auto;' onclick='konus();' type='button' value='Konuş' />
+<br />
+<br />
+<select id="ses" style="width:100%">
+</select>
+<br />
+<br />
+<input type="range"  min="0.2" max="1.5" step="0.1" value="0.7" class="slider" id="hiz" style="width: 100%;">
+<!-- <input type="number" id="hiz" name="hiz" min="0.2" max="1.5" step="0.1" value="0.7" style="float: right;"> -->
+</div>
+</div>
+</body>
 </html>
